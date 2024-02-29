@@ -5,10 +5,18 @@ public class Table extends Thread{
     private List<Philosopher> philosopherList;
     private List<Fork> forkList;
     public Table(Integer count){
+        arrangeForks(count);
+        inviteGuests(count);
+
+
+    }
+    public void arrangeForks(Integer count){
         forkList = new ArrayList<>(count);
         for(int i = 0; i < count; i++){
             forkList.add(new Fork());
         }
+    }
+    public void inviteGuests(Integer count){
         philosopherList = new ArrayList<>(count);
         for (int i = 0; i < count; i++){
             if (i == 0){
