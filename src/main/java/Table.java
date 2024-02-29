@@ -12,9 +12,9 @@ public class Table extends Thread{
         philosopherList = new ArrayList<>(count);
         for (int i = 0; i < count; i++){
             if (i == 0){
-                philosopherList.add(new Philosopher(forkList.get(0), forkList.get(count-1)));
+                philosopherList.add(new Philosopher(this, forkList.get(0), forkList.get(count-1)));
             } else{
-                philosopherList.add(new Philosopher(forkList.get(i), forkList.get(i-1)));
+                philosopherList.add(new Philosopher(this, forkList.get(i), forkList.get(i-1)));
             }
         }
     }
@@ -24,5 +24,17 @@ public class Table extends Thread{
         for (Philosopher philosopher : philosopherList) {
             philosopher.start();
         }
+    }
+    public synchronized boolean getForks(Fork first, Fork second){
+        if (!first.isUsed() && !second.isUsed()){
+            first.used();
+            second.used();
+            return true;
+        }
+        return false;
+    }
+    public void putForks(Fork first, Fork second){
+        first.unused();
+        second.unused();
     }
 }
